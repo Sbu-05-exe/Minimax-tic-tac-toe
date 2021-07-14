@@ -1,45 +1,86 @@
 import java.util.Scanner;
+import java.util.function.Consumer;
 
-public class Game {
+public class Game {	
 
-	public static void main(String[] args) {
+	Consumer<Pos> drawCross;
+	Consumer<Pos> drawCircles;
 
-		//set up game
-		int moves = 0;
-		Player[] players = new Player[2]; 
-		Player current;
+	Player[] players = new Player[2]; 
+	Board game;
+
+	public Game(Consumer<Pos> aDrawReferenceForCrosses, Consumer<Pos>aDrawReferenceForCircles) {
+
+		drawCross = aDrawreferenceForCrosses;
+		drawCircles = aDrawReferenceForCircles;
+		
+		players = new Player[2];
 		Scanner input = new Scanner(System.in);
-
 		// ask user how many players (1 or 2)
 
-		// set up players	
+		// set up players
 		players[0] = new User("Psych", 1, input);
+		players[0].setCall();
 		players[1] = new User("JJ", 2, input);
 
-		Board game = new Board();
+		//set up board
+		game = new Board();
+
+	}//
+
+
+	/**
+	 *  This is the method that contains the game logic
+	 * 
+	 *  In future, I would like to add parameters to the game so that we can allow the user to set it up
+	 * 
+	 */
+	public static startGame() {
+		
+		//set up game
+		int moves = 0;
+		Player currentPlayer;
+
 		while (true) {
 
-			// pick whose turn it is
-			current = players[moves % 2];
+			currentPlayer = players[moves % 2]; // pick whose turn it is
 
-			// make them move
-			current.move();
-			moves++;
+			//visibility of system status
+			System.out.println("It is " + currentPlayer.toString() + "'s turn");
+			Pos movePlayed = currentPlayer.move();
+			int playerNum = currentPlayer.getPlayerNum();
+			game.playMove(movePlayed, playerNum); // make them move
+			moves++; // track how many moves have been made
 
-			// check if there is a winner
+
+			// print the game for debugging purpose
+			System.out.println(); // making the outputer look less cluttered
+			System.out.println(game);
+
+			// check if someone has one
 			if (game.checkWinner()) {
 
-				System.out.println("Congratulations Player: " + current + " has won!");
+				System.out.println("Congratulations Player: " + currentPlayer + " has won!");
 				break;
 
 			} // 
 
 			// check that the game has ended?
-			if (moves == 9) {
+			if (moves >= 9) {
+
+				System.out.println("It's a tie!");
 				break;
+			
 			}
 		
 		} // while
+		
+	} // startGame
+
+	public static void main(String[] args) {
+
+		// make a while loop and ask the user if they want to quit
+		startGame();
 		
 	}// main
 

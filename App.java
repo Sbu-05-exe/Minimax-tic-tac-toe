@@ -12,11 +12,9 @@ public class App extends Application {
 
 	final int SIZE = 500;
 	final double BLOCK_SIZE = 500/3;
-	Stage window;
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+	GraphicsContext gc;
+	Stage window;
 
 	public void start(Stage primaryStage) {
 
@@ -24,15 +22,15 @@ public class App extends Application {
 		Group root = new Group();
 
 		Canvas canvas = new Canvas(SIZE,SIZE);
-		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc = canvas.getGraphicsContext2D();
 
-		drawBoard(gc);
+		drawBoard();
 
 		/*/ Test methods for drawing crosses and circles /*/
-		// drawCircle(gc, new Pos(0,0));
-		// drawAllCircles(gc);
-		// drawCross(gc, new Pos(0,0));
-		// drawAllCrosses(gc);
+		// drawCircle(new Pos(0,0));
+		// drawAllCircles();
+		// drawCross(new Pos(0,0));
+		// drawAllCrosses();
 
 		root.getChildren().add(canvas); 
 
@@ -46,7 +44,7 @@ public class App extends Application {
 	 * A method used to draw the tic-tac-toe board
 	 */
 
-	private void drawBoard(GraphicsContext gc) {
+	private void drawBoard() {
 		gc.setFill(Color.BLUE);
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(5);
@@ -71,7 +69,7 @@ public class App extends Application {
 	 * 
 	 */	
 
-	private void drawCross(GraphicsContext gc, Pos pos) {
+	private void drawCross(Pos pos) {
 		/* PRE CONDITION 
 			pos.x and pos.y must be within bounds [0,2]
 		*/
@@ -101,12 +99,12 @@ public class App extends Application {
 	 * 
 	 * draw All crosses
 	 */
-	private void drawAllCrosses(GraphicsContext gc) {
+	private void drawAllCrosses() {
 
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
 
-				drawCross(gc, new Pos(row,col));
+				drawCross(new Pos(row,col));
 			
 			}
 		}
@@ -120,7 +118,7 @@ public class App extends Application {
 	 * 
 	 */
 
-	private void drawCircle(GraphicsContext gc, Pos pos) {
+	private void drawCircle(Pos pos) {
 		
 		/* PRE-CONDITION
 			pos.x and pos.y must be in the range [0,2]
@@ -133,12 +131,6 @@ public class App extends Application {
 
 		gc.strokeOval(x + BLOCK_SIZE * pos.x, y + BLOCK_SIZE * (2 - pos.y), radius, radius);
 
-		// test that the circles are centered
-	// 	for (int row = 0; row < 3; row++) {
-	// 		for (int col = 0; col < 3; col++) {
-	// 			gc.strokeOval(x + cellWidth * row, y + cellHeight * col, radius, radius);
-	// 		}
-	// 	}
 	}// drawBoard
 
 	/**
@@ -148,15 +140,19 @@ public class App extends Application {
 	 * 
 	 */
 
-	private void drawAllCircles(GraphicsContext gc) {
+	private void drawAllCircles() {
 
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
 
-				drawCircle(gc, new Pos(row, col));
+				drawCircle(new Pos(row, col));
 
 			} //inner for
 		} // outer for
 	} // drawAllCircles
+
+	public static void main(String[] args) {
+		launch(args);
+	} // main
 
 } // app

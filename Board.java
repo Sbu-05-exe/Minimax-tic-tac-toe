@@ -111,7 +111,6 @@ public class Board {
 				sb.append("\n");
 
 			}
-
 		
 		} // outer for	
 
@@ -119,7 +118,7 @@ public class Board {
 
 	}// toString
 
-	public void move(int x, int y, int playerNum) {
+	public void playMove(int x, int y, int playerNum) {
 
 		y = 2 - y;
 
@@ -127,8 +126,8 @@ public class Board {
 
 	}
 
-	public void move(Pos pos, int playerNum) {
-		this.move(pos.x, pos.y, playerNum);
+	public void playMove(Pos pos, int playerNum) {
+		this.playMove(pos.x, pos.y, playerNum);
 	} // overloaded move
 
 	// public static void main(String[] args) {

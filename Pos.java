@@ -15,7 +15,7 @@ public class Pos {
 		StringBuffer sb = new StringBuffer("(");
 		sb.append(x).append(",").append(y);
 
-		return sb.toString();
+		return sb.append(")").toString();
 	} // toString
 
 } // 
