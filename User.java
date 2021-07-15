@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 /**
  *  A class that represents a human player. In other words, a scanner will be used to determine the move of the player
@@ -8,6 +9,7 @@ public class User implements Player {
 	private int playerNum;
 	private Scanner in;
 	private String name;
+	private Consumer draw;
 
 	public User(String aName, int aPlayerNum, Scanner aScanner) {
 
@@ -66,6 +68,14 @@ public class User implements Player {
 		return name;
 	} // toString
 
+	public void setDrawMethod(Consumer drawMethod) {
+		draw = drawMethod;
+	}; // setDrawMethod
+
+	public void draw(Pos pos) {
+		draw.accept(pos);
+	}; // draw
+	
 	// Static utility Methods
 
 	/**
@@ -149,5 +159,6 @@ public class User implements Player {
 		// This method has passed all the tests I could think of
 
 	} // testMoveMethods
+
 
 } // Player

@@ -3,16 +3,10 @@ import java.util.function.Consumer;
 
 public class Game {	
 
-	Consumer<Pos> drawCross;
-	Consumer<Pos> drawCircles;
-
 	Player[] players = new Player[2]; 
 	Board game;
 
 	public Game(Consumer<Pos> aDrawReferenceForCrosses, Consumer<Pos>aDrawReferenceForCircles) {
-
-		drawCross = aDrawreferenceForCrosses;
-		drawCircles = aDrawReferenceForCircles;
 		
 		players = new Player[2];
 		Scanner input = new Scanner(System.in);
@@ -20,8 +14,12 @@ public class Game {
 
 		// set up players
 		players[0] = new User("Psych", 1, input);
-		players[0].setCall();
+		User userOne = (User) players[0];
+		userOne.setDrawMethod(aDrawReferenceForCrosses);
+
 		players[1] = new User("JJ", 2, input);
+		User userTwo = (User) players[1];
+		userTwo.setDrawMethod(aDrawReferenceForCircles);
 
 		//set up board
 		game = new Board();
@@ -35,7 +33,7 @@ public class Game {
 	 *  In future, I would like to add parameters to the game so that we can allow the user to set it up
 	 * 
 	 */
-	public static startGame() {
+	public void startGame() {
 		
 		//set up game
 		int moves = 0;
@@ -79,8 +77,9 @@ public class Game {
 
 	public static void main(String[] args) {
 
+		System.out.println("Please work");
 		// make a while loop and ask the user if they want to quit
-		startGame();
+		// startGame();
 		
 	}// main
 

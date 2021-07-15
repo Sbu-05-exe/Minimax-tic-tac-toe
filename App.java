@@ -1,3 +1,4 @@
+import java.util.function.Consumer;
 import javafx.application.Application;
 
 import javafx.scene.paint.Color;
@@ -37,6 +38,9 @@ public class App extends Application {
 
 		window.setScene(new Scene(root));
 		window.show();
+
+		// Game tictactoe = new Game(this::drawCross , this::drawCircle);
+		// tictactoe.startGame();
 
 	} // start
 
