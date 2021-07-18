@@ -79,7 +79,6 @@ public class Game {
 	} // setFirst Player 
 
 	public void changeCurrentPlayer() {
-		
 		moves++;
 		currentPlayer = players[moves % 2]; 
 
@@ -156,12 +155,11 @@ public class Game {
 
 	public static void main(String[] args) {
 
-		// System.out.println("Please work");
 		Game tictactoe = new Game();
 		tictactoe.setUpPlayers();
 		tictactoe.setFirstPlayer();
 		tictactoe.play();
-		
+
 	}// main
 
 }// Game class

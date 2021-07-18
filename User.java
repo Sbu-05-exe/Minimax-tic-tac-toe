@@ -58,7 +58,7 @@ public class User implements Player {
 	public String toString() {
 		return name;
 	} // toString
-	
+
 	// Static utility Methods
 
 	/**
@@ -120,4 +120,4 @@ public class User implements Player {
 
 	} // testMoveMethods
 
-} // Player
+} // User
