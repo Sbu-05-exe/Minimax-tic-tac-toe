@@ -1,9 +1,8 @@
 public interface Player {
 	
 	/* need to test this */
-
 	public int getPlayerNum();
 	public String getName();
-	public Pos move();
+	public Point<Integer> move();
 
 } // Player

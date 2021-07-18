@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 /**
  *  A class that represents a human player. In other words, a scanner will be used to determine the move of the player
@@ -8,6 +9,7 @@ public class User implements Player {
 	private int playerNum;
 	private Scanner in;
 	private String name;
+	private Consumer draw;
 
 	public User(String aName, int aPlayerNum, Scanner aScanner) {
 
@@ -17,35 +19,26 @@ public class User implements Player {
 
 	} // User Constructor;
 
-
 	/** 
 	 * User move methods, takes input from terminal and returns a Pos object.
 	 * 	
 	 * Does not return until the user has entered a valid input
 	 * 
 	 */
-	public Pos move() {
 
-		String input;	
-		Pos move = null;
+	public Point<Integer> move() {
 
-		while (true) {
+		System.out.print("Please enter the co-ordinate that you want to play (x,y):");
+		String input = in.nextLine();	
 
-			System.out.print("Please enter the co-ordinate that you want to play (x,y):");
-			input = in.nextLine();
+		Point<Integer> move = getMoveFromUserInput(input);
 
-			if (isValidInput(input)) {
-
-				move = getMoveFromUserInput(input);
-				break;
-
-			} else {
-
-				System.out.println("Invalid move please try again:");
-			
-			}
- 
-		} // while
+		// when user enters input, we expect it to be in the range 1-3 as labelled by the game
+ 		// since the game Object only accepts co-ordinates in range 0-2 because of the 2D array used to represent the games state
+ 		// we will decrease the x and y co-ordinates by 1
+		move.setX(move.getX() - 1);
+		move.setY(move.getY() - 1);
+		move.setY(2 - move.getY()); // inverting the y so it keeps with the normal mapping of a cartesian plane that our user expects
 
 		return move;
 
@@ -65,7 +58,7 @@ public class User implements Player {
 	public String toString() {
 		return name;
 	} // toString
-
+	
 	// Static utility Methods
 
 	/**
@@ -78,7 +71,7 @@ public class User implements Player {
 	/** 
 	 * Finds the first two numerical characters in a string
 	 */	
-	public static Pos getMoveFromUserInput(String input) {
+	public static Point getMoveFromUserInput(String input) {
 
 		// Pre condition: The input is a valid move contain 2 integers with values between 0 and 3 
 		// int x = 0;
@@ -92,43 +85,20 @@ public class User implements Player {
 
 			if (isWithinRange(c, '1', '3')) {
 
-				// not using 48 because we want the move between the numbers [0,2] if we are going
-				// to play it on a board, but a user most likely enters a number from [1,3] so we 
-				// subtract 1 to balance
-				coords[count] = (int) c - 49;
+				coords[count] = ((int) c) - 48;
 				count++;
-			
+
 			}
 			
 		}
 
-		return new Pos(coords[0],coords[1]);
+		return new Point(coords[0] ,coords[1]);
 
 	} // getMoveFromUserInput
 
-	/** 
-	 * checks if a users move is valid or not
-	 */
-	public static boolean isValidInput(String input) {
-
-		if (input.length() < 2) {
-			
-			return false;
-
-		}
-
-		int count = 0;
-		for (char c: input.toCharArray()) {
-			
-			if (isWithinRange(c, '1', '3')) count++;
-
-		}
-
-		// only return true if there is a valijd x and y co-ordinate
-		return count == 2;
-
-	} // isValidInput;
-
+	public static void main(String[] args) {
+		testMoveMethods(10);
+	} // main
 
 	/** 
 	 * A method that test a number of user generated inputs 
@@ -142,7 +112,7 @@ public class User implements Player {
 
 		for (int i = 0; i < reps; i++) {
 
-			Pos move = me.move();
+			Point<Integer> move = me.move();
 			System.out.println(move);
 		}
 

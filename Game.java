@@ -1,33 +1,100 @@
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 public class Game {	
 
-	Consumer<Pos> drawCross;
-	Consumer<Pos> drawCircles;
+	private boolean gameOver; 
+	private int moves;
+	private int numPlayers = 0;
+	private Player[] players = new Player[2]; 
+	private Player currentPlayer;
+	private Board board;
+	private Scanner input = new Scanner(System.in); 
 
-	Player[] players = new Player[2]; 
-	Board game;
+	public Game() {
 
-	public Game(Consumer<Pos> aDrawReferenceForCrosses, Consumer<Pos>aDrawReferenceForCircles) {
+		gameOver = false;
+		board = new Board();
 
-		drawCross = aDrawreferenceForCrosses;
-		drawCircles = aDrawReferenceForCircles;
+	} // Game constructor
+
+	public void endGame() {
+		gameOver = true;
+	} // false
+
+	public boolean isOver() {
+		return gameOver;
+	} // isGameOver
+
+	public boolean hasWinner() {
+		board.checkForWinner();
+		return board.hasWinner();
+	} // hasWinner;
+
+	public int getWinCode() {
+		return board.getWinCode();
+
+	} // getWinStatus
+
+	public boolean checkDraw() {
+		System.out.println("moves played: " + moves);
+		return moves >= 9;
+	} // checkdraw
+
+	public void addUser(String aUsername) {
+
+		players[numPlayers] = new User(aUsername, numPlayers+1 , input);
+		numPlayers++;
+
+	} // addPlayerOne
+
+	public boolean playMove(Point move) {
+
+		return board.playMove(move, currentPlayer);
+
+	} // playMove
+
+	public boolean isValidMove(Point<Integer> move) {
+
+		return board.isValidMove(move.getX(), move.getY());
+
+	} // move
+
+	public void printBoard() {
+
+		System.out.println(board);
+
+	} // printBoard
+
+	public Player getCurrentPlayer() {
+
+		return currentPlayer;
+	
+	} // getCurrentPlayer
+
+	public void setFirstPlayer() {
+
+		moves = 0;
+		currentPlayer = players[0];
+
+	} // setFirst Player 
+
+	public void changeCurrentPlayer() {
 		
-		players = new Player[2];
-		Scanner input = new Scanner(System.in);
-		// ask user how many players (1 or 2)
+		moves++;
+		currentPlayer = players[moves % 2]; 
 
-		// set up players
-		players[0] = new User("Psych", 1, input);
-		players[0].setCall();
-		players[1] = new User("JJ", 2, input);
+	} // switch
 
-		//set up board
-		game = new Board();
+	public void setUpPlayers() {
+		// hard code players
 
-	}//
+		addUser("Psych");
+		addUser("Kidus");
 
+		//TODO ask user for input for their names
+		// and ask them who they want to play against, user or player
+
+	} // setUpPlayers
 
 	/**
 	 *  This is the method that contains the game logic
@@ -35,43 +102,53 @@ public class Game {
 	 *  In future, I would like to add parameters to the game so that we can allow the user to set it up
 	 * 
 	 */
-	public static startGame() {
+	public void play() {
 		
 		//set up game
 		int moves = 0;
-		Player currentPlayer;
+		Point<Integer> move;
+		boolean validMove; 
 
 		while (true) {
-
-			currentPlayer = players[moves % 2]; // pick whose turn it is
+		//the game has started
 
 			//visibility of system status
 			System.out.println("It is " + currentPlayer.toString() + "'s turn");
-			Pos movePlayed = currentPlayer.move();
-			int playerNum = currentPlayer.getPlayerNum();
-			game.playMove(movePlayed, playerNum); // make them move
-			moves++; // track how many moves have been made
 
+			do {
 
-			// print the game for debugging purpose
-			System.out.println(); // making the outputer look less cluttered
-			System.out.println(game);
+				move = currentPlayer.move();
+				validMove = board.isValidMove(move.getX(), move.getY()); 
 
-			// check if someone has one
-			if (game.checkWinner()) {
+			} while (!validMove);
 
-				System.out.println("Congratulations Player: " + currentPlayer + " has won!");
+			System.out.println("outside of the loop");
+			board.playMove(move, currentPlayer); // make them move
+
+			// print the game for debugging purPointe
+			printBoard();
+
+			// check if someone has won
+			board.checkForWinner(); // have ot check if someone first
+			if (board.hasWinner()) {
+
+				System.out.println("Congratulations! " + currentPlayer + " has won!");
+				endGame();
 				break;
 
-			} // 
+			}  
 
-			// check that the game has ended?
-			if (moves >= 9) {
+			// check that the game has drawn
+			if (checkDraw()) {
 
 				System.out.println("It's a tie!");
+				endGame();
 				break;
 			
 			}
+
+			// make it the next players turn
+			changeCurrentPlayer();
 		
 		} // while
 		
@@ -79,8 +156,11 @@ public class Game {
 
 	public static void main(String[] args) {
 
-		// make a while loop and ask the user if they want to quit
-		startGame();
+		// System.out.println("Please work");
+		Game tictactoe = new Game();
+		tictactoe.setUpPlayers();
+		tictactoe.setFirstPlayer();
+		tictactoe.play();
 		
 	}// main
 
