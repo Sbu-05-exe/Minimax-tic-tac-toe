@@ -24,3 +24,12 @@ I am a novice at javafx so I don't know if I would be able to set up this on ant
 
 NOTE the build.sh file is a linux bash file, so if you are on windows just change the file extension to .bat and you should be able to get something working...
 
+## Pictures
+
+Below you can find examples of how the game looks when its run in the terminal
+
+![A game of tic tac toe run in the terminal](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/q6gbmdit3gw5lzt52cok.png)
+
+And how it looks when its run with a GUI
+
+![A game of tic tac toe](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6ewebj120ow88xm37wbm.png)
