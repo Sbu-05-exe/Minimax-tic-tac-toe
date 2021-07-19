@@ -18,8 +18,6 @@ public class Board {
 	}
 
 	public boolean isCellEmpty(int x, int y) {
-
-		System.out.println(new Point(x,y));
 		return board[y][x] == 0;
 	} //isCellEmpty
 
@@ -126,7 +124,7 @@ public class Board {
 
 	public String toString() {
 
-		StringBuffer sb = new StringBuffer(""); 
+		StringBuffer sb = new StringBuffer("\n"); 
 		for (int row = 0; row < size; row++) {
 
 			for (int col = 0; col < size; col++) {
@@ -196,8 +194,6 @@ public class Board {
 
 			return false;
 		}
-		
-		
 
 	}// playMove
 

@@ -43,8 +43,8 @@ public class App extends Application {
 		// create game instance
 		game = new Game();
 		// set up game
-		game.addUser("Sibu");
-		game.addUser("Kidus");
+		game.addUser("Player 1");
+		game.addUser("Player 2");
 		game.setFirstPlayer();
 
 		// draw the game

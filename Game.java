@@ -87,8 +87,8 @@ public class Game {
 	public void setUpPlayers() {
 		// hard code players
 
-		addUser("Psych");
-		addUser("Kidus");
+		addUser("Player 1");
+		addUser("Player 2");
 
 		//TODO ask user for input for their names
 		// and ask them who they want to play against, user or player
@@ -121,7 +121,6 @@ public class Game {
 
 			} while (!validMove);
 
-			System.out.println("outside of the loop");
 			board.playMove(move, currentPlayer); // make them move
 
 			// print the game for debugging purPointe
